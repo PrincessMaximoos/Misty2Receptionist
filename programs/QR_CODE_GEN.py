@@ -33,7 +33,7 @@ def generate_qr_code(data, output_filename):
 # Example usage
 if __name__ == "__main__":
     # data = input("Please enter what you wish to turn into a qr code:")
+    # data = "Name: Benhur Bastaki, Company: Staffs Uni, Visitor: 2"
     # data = "Name: Max McGill, Company: Staffs Uni, Visitor: 1"
-    # data = "quit"
-    data = "Name: Benhur Bastaki, Company: Staffs Uni, Visitor: 2"
+    data = "quit"
     generate_qr_code(data, "qr_codes/qrcode.png")

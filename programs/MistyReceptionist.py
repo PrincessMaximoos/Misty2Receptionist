@@ -1,8 +1,17 @@
 #----Install----#
-#pip install misty sdk
-#pip install websocket-client
-#pip install opencv-python-headless image
-#pip install PIL
+'''
+pip install misty sdk
+pip install websocket-client
+pip install opencv-python-headless image
+pip install PIL
+pip install --upgrade gpt4all typer
+
+https://github.com/nomic-ai/gpt4all?tab=readme-ov-file
+# pick correct installer for your os
+
+sudo apt install nvidia-cuda-toolkit
+
+'''
 
 #----import mistyPy----#
 from mistyPy.Robot import Robot
@@ -25,6 +34,9 @@ import base64
 #----import threading----#
 import threading
 
+#----import GPT----#
+from gpt4all import GPT4All
+
 
 #----Global Declarable HELL----#
 ids : list[dict] = [{"Name" : "Name", "Company" : "Company", "IDNum" : "IDNum"}]
@@ -35,9 +47,17 @@ visitor_count = 0
 def dev(src : str = "Dev", mess : str = "", returns : any = ""):
     print("{:<7}|{:<45}|{:<}".format(src, mess, returns))
 
+def drop():
+    print("{:<7}|".format(""))
+
+
+
+
+
+
 
 #----QR Code Functions----#
-def qr_scan():
+def qr_scan() -> list:
     global visitor_count
     global ids
     dev("QR", "Waiting for QR Code...")
@@ -54,7 +74,10 @@ def qr_scan():
 
         if data == "quit":
             dev("QR", "Closing QR...")
-            break
+            # break
+
+            return "Null", "Null"
+
         elif data != "Error":
             id = id_check(data)
             if not id[0]:
@@ -63,10 +86,13 @@ def qr_scan():
                 visitor_count += 1
                 dev("QR", "Visitor Count Incremented", str(visitor_count))
 
-    print()
-    for id in ids:
-        print("{:<20}|{:<20}|{:<20}".format(id["Name"], id["Company"], id["IDNum"], ))
-    print("\nNum of Visitors: {}".format(visitor_count))
+                return id[1]["Name"], ["IDNum"]
+
+    # drop()
+    # for id in ids:
+    #     print("{:<7}|{:<20}|{:<20}|{:<20}".format("", id["Name"], id["Company"], id["IDNum"]))
+    # print("{:<7}|Num of Visitors: {}".format("", visitor_count))
+    # drop()
 
 
 def qr_read(filename : str) -> str:
@@ -81,7 +107,7 @@ def qr_read(filename : str) -> str:
         return(data)
     else:
         return("Error")
-    
+
 def id_check(data : str) -> list:
     global ids
     details : dict = {"Name" : "", "Company" : "", "IDNum" : 0}
@@ -90,7 +116,7 @@ def id_check(data : str) -> list:
     for string in stringlist:
         sectionlist = string.split(': ')
         details[sectionlist[0]] = sectionlist[1]
-    
+
     already_in_ids = False
     for id in ids:
         if id["Name"] == details["Name"]:
@@ -99,17 +125,68 @@ def id_check(data : str) -> list:
     return already_in_ids, details
 
 
+
+
+
+
+#----GPT----#
+def get_response(question : str) -> str:
+    return model.generate(question)
+
+def start_q_and_a(visitor_name : str, visitor_id : int):
+    dev("GPT", "You can now ask me any questions about artificial intelligence or machine learning.")
+    while True:
+        dev("GPT", "Simulate visitor asking a question: ")
+        question = input()  # Simulate voice recognition
+        if not question.strip():
+            continue
+
+        answer = get_response(question)
+        print(answer)
+
+        dev("GPT", "Do you have any more questions?")
+        dev("GPT", "Simulate visitor response (yes/no): ")
+        follow_up = input().strip().lower()
+        if follow_up == "no":
+            say_goodbye(visitor_name, visitor_id)
+            break
+
+def say_goodbye(visitor_name, visitor_id):
+    dev("GPT", "It was nice meeting you, {visitor_name}. If you have further questions about AI or research collaboration, you can contact my master at email@example.com.")
+    dev("GPT", "Would you like me to repeat the email address?")
+    dev("GPT", "Simulate visitor response (yes/no): ")
+
+    repeat_email = input().strip().lower()
+    if repeat_email == "yes":
+        dev("GPT", "The email address is b.b.bastaki@staffs.ac.uk.")
+    dev("GPT", "Bye for now! I will wait here for the next visitor.")
+
+
+
+
+
+#----Main Function----#
 if __name__ == "__main__":
-    ip_address : str = "10.4.155.169"
-    misty : Robot = Robot(ip_address)
+    
+    model = GPT4All("Llama-3.2-1B-Instruct-Q4_0.gguf") # downloads / loads a 4.66GB LLM
+    
+    ip_address : str = "10.4.155.108"
+    # misty : Robot = Robot(ip_address)
 
-    thread = threading.Thread(target = qr_scan)
+    # thread = threading.Thread(target = qr_scan)
+    # dev("Global", "Starting Thread")
+    # thread.start()
 
-    dev("Global", "Starting Thread")
-    thread.start()
+    dev("Global", "Starting QR Scan")
+    # details : list = qr_scan()
+    details = "Max", 1
 
-    thread.join()
-    dev("Global", "Thread closed")
+    dev("Global", "Starting GPT")
+    with model.chat_session():
+        start_q_and_a(details[0], details[1])
+
+    # thread.join()
+    # dev("Global", "Thread closed")
 
 
 
