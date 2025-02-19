@@ -1,7 +1,3 @@
-'''
-pip install qrcode
-'''
-
 import qrcode
 
 def generate_qr_code(data, output_filename):
