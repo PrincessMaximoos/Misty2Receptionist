@@ -2,7 +2,6 @@
 '''
 Misty as a GPT enabled smart receptionist
 
-
 pip install --upgrade gpt4all typer
 
 pip install misty-sdk websocket-client opencv-python-headless image
@@ -237,7 +236,7 @@ def qr_main() -> list:
         read = misty.TakePicture(True, "qr_check", 640, 480, False, True)
         
 
-        with open(file, "wb") as f: # wb is important, standard write doesnt work (write as bytes maybe???)
+        with open(file, "wb") as f: # wb is important (write as bytes)
             f.write(base64.b64decode(read.json()["result"]["base64"]))
         f.close()
 
@@ -245,7 +244,6 @@ def qr_main() -> list:
 
         if data == "quit":
             dev.dev("QR", "Closing QR...")
-            # break
 
             return "Null"
 

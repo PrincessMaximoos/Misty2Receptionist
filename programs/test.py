@@ -122,8 +122,6 @@ def dev_inp(src : str = "") -> str:
     misty.CaptureSpeech(True, requireKeyPhrase=True)
     fail = "Failed"
     while fail == "Failed":
-        # misty.StartRecordingAudio("audiotest.wav")
-        # time.sleep(5)
         b64 = misty.GetAudioFile("capture_HeyMisty.wav", True)
         fail = b64.json()["status"]
 
@@ -142,5 +140,10 @@ def audio_to_text(filepath : any):
         # recognize (convert from speech to text)
         text = r.recognize_google(audio_data)
         return text
-    
-dev_speak("", ask(dev_inp("Test")))
+
+while True:
+    try:
+        dev_speak("", ask(dev_inp("Test")))
+
+    except:
+        dev("Fail", "Error")
