@@ -81,9 +81,8 @@ while True:
         text = dev_inp("Usr")
         response = ask(text)
         dev_speak("Misty", response)
-        i = 0
         sleep = 1
-        while i < len(response.split(" ")) / 4 / 8:
+        for i in range(len(response.split(" ")) / 4 / 8):
             misty.MoveHead(yaw = 30)
             misty.MoveArm("left", 90)
             time.sleep(sleep)
@@ -107,7 +106,6 @@ while True:
             time.sleep(sleep)
             misty.MoveArm("right", 0)
             time.sleep(sleep)
-            i += 1
 
     except:
         dev("Misty", "Error")

@@ -1,4 +1,4 @@
-ids : list[dict] = [{"Name" : "Name", "Company" : "Company", "IDNum" : "IDNum"}, ]
+ids : list[dict] = [{"Name" : "Name", "Company" : "Company", "IDNum" : "IDNum", "Amount" : "Amount"}]
 visitor_count = 0
 
 import json
