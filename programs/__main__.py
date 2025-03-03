@@ -1,7 +1,11 @@
-#----Install----#
 '''
 Misty as a GPT enabled smart receptionist
 
+REQUIRES INTERNET CONNECTION
+----------------------------
+
+
+#----Install----#
 pip install --upgrade gpt4all typer
 
 pip install misty-sdk websocket-client opencv-python-headless image
@@ -119,7 +123,7 @@ class dev_nomisty(dev_commands):
 
         self.dev(src, mess, info)
         
-        # text_to_speech(mess)
+        text_to_speech(mess)
 
     def dev_inp(self, src : str = "") -> str:
         '''
@@ -514,12 +518,12 @@ if __name__ == "__main__":
         if isinstance(dev, dev_misty):
             info : dict = qr_main()
         
-        elif isinstance(dev, dev_nomisty):
-            details : str = qr_search("qr_codes/max.png")
-            id : list = id_check(details)
-            if not id[0]:
-                id_append(id)
-            info = id[1]
+        # elif isinstance(dev, dev_nomisty):
+        #     details : str = qr_search("qr_codes/max.png")
+        #     id : list = id_check(details)
+        #     if not id[0]:
+        #         id_append(id)
+        #     info = id[1]
             
         else:
             
