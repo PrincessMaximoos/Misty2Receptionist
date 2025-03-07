@@ -6,25 +6,20 @@ REQUIRES INTERNET CONNECTION
 
 
 #----Install----#
-pip install --upgrade gpt4all typer
+pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3
 
-pip install misty-sdk websocket-client opencv-python-headless image
+# # https://github.com/nomic-ai/gpt4all?tab=readme-ov-file
+# # # pick correct installer for your os
 
-pip install pyaudio speechrecognition pyttsx3
-
-https://github.com/nomic-ai/gpt4all?tab=readme-ov-file
-# pick correct installer for your os
-
-Linux:
+Ubuntu:
 sudo apt install nvidia-cuda-toolkit
 sudo apt install espeak
+sudo apt install python3-pyaudio
 
 Windows:
 https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_local
 
-
-Linux:
-
+pip install pyaudio
 '''
 
 #----import mistyPy----#
@@ -41,6 +36,9 @@ import base64
 
 #----import time----#
 import time
+
+#----import math----#
+import math
 
 #----import GPT----#
 from gpt4all import GPT4All
@@ -163,6 +161,31 @@ class dev_misty(dev_commands):
 
         self.dev(src, mess, info)
         misty.Speak(mess)
+        sleep = 1
+        for i in range(math.ceil(len(mess.split(" ")) / 4 / 8)):
+            misty.MoveHead(yaw = 30)
+            misty.MoveArm("left", 90)
+            time.sleep(sleep)
+            misty.MoveArm("right", 45)
+            time.sleep(sleep)
+            
+            misty.MoveHead(yaw = -15)
+            misty.MoveArm("left", 0)
+            time.sleep(sleep)
+            misty.MoveArm("right", 0)
+            time.sleep(sleep)
+
+            misty.MoveHead(yaw = -30)
+            misty.MoveArm("left", 45)
+            time.sleep(sleep)
+            misty.MoveArm("right", 90)
+            time.sleep(sleep)
+
+            misty.MoveHead(yaw = 0)
+            misty.MoveArm("left", 0)
+            time.sleep(sleep)
+            misty.MoveArm("right", 0)
+            time.sleep(sleep)
         
     def dev_inp(self, src : str = "") -> str:
         '''
@@ -261,9 +284,7 @@ def qr_main() -> list:
                 dev.update_count()
                 dev.dev("QR", "Visitor Count Incremented", str(visitor_count))
 
-                return id[1]
-            else:
-                print("ID alreadyfound")
+            return id[1]
 
 def qr_search(filename : str) -> str:
     '''
@@ -285,7 +306,7 @@ def qr_search(filename : str) -> str:
     else:
         return("Error")
 
-def id_check(data : str) -> list:
+def id_check(data : str) -> list[bool, dict]:
     '''
     Check ID against ID list. Returns (whether in ids), (their details).
     ---------------------------------------------------------------
@@ -387,10 +408,10 @@ def start_q_and_a(visitor_name : str, visitor_id : str, already_checked : bool) 
 
         follow_up = ""
         while follow_up != "yes" and follow_up != "no":
-            dev.dev_speak("MistyGPT", "If you have anymore questions say 'Hey Misty, I have more questions' otherwise say 'Hey Misty, I dont have anymore questions'")
+            dev.dev_speak("MistyGPT", "If you have any more questions say 'Hey Misty, I have more questions' otherwise say 'Hey Misty, I dont have any questions'")
             dev.dev("GPT", "Simulate visitor response (yes/no): ")
             follow_up = dev.dev_inp("Usr").strip().lower()
-            if follow_up == "i dont have anymore questions":
+            if follow_up == "i dont have any questions":
                 say_goodbye(visitor_name, visitor_id)
                 return 0
             elif follow_up == "i have more questions":
@@ -479,7 +500,7 @@ if __name__ == "__main__":
     model = GPT4All("Llama-3.2-1B-Instruct-Q4_0.gguf") # less resource intensive model
     # model = GPT4All("Meta-Llama-3-8B-Instruct.Q4_0.gguf") # stronger model
     
-    ip_address : str = "10.4.154.243"
+    ip_address : str = "10.4.155.4"
     
     method = input("Do you wish to enter the text only interface?\n").strip().lower()
     if method == "no":
@@ -501,7 +522,7 @@ if __name__ == "__main__":
         ids = file["result"]
         visitor_count = file["num"]
     except:
-        ids : list[dict] = [{"Name" : "Name", "Company" : "Company", "IDNum" : "IDNum"}, ]
+        ids : list[dict] = [{"Name" : "Name", "Company" : "Company", "IDNum" : "IDNum", "Amount" : "Amount"}]
         visitor_count = 0
 
         with open("output/visitor_info.json", "w") as f:
@@ -529,14 +550,14 @@ if __name__ == "__main__":
             
             details : dict = dev.dev_typeinp(src = "UsrName"), dev.dev_typeinp(src = "UsrID"), dev.dev_typeinp(src = "UsrComp")
             id : list = id_check(f"Name: {details[0]}, Company: {details[2]}, IDNum: {details[1]}")
-            id_append(id)
+            id_append(id[1])
             info = id[1]
 
 
         dev.dev("Global", "Starting GPT")
         dev.dev()
         with model.chat_session():
-            start_q_and_a(info["Name"], info["IDNum"], id[0])
+            start_q_and_a(info["Name"], info["IDNum"], info["Amount"] > 1)
 
         print()
         for id in ids:
