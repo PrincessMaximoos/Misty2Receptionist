@@ -32,9 +32,9 @@ sudo apt install espeak python3-pyaudio
 -------------------------------------------------------------------------------------------------------------------
 
 ## Setup
-Power Misty on
-Plug an empty usb thumbdrive into PC and create a folder called 'misty'
-When her eyes open fully, take her back cover off and insert a usb thumbdrive
-Wait 1 minute and not a moment less
-Plug usb back into pc and open the new device_info.json file in the 'misty' folder
-Ctrl + F to find ip_address and then copy number into the IP Address constant
+- Power Misty on
+- Plug an empty usb thumbdrive into PC and create a folder called 'misty'
+- When her eyes open fully, take her back cover off and insert a usb thumbdrive
+- Wait 1 minute and not a moment less
+- Plug usb back into pc and open the new device_info.json file in the 'misty' folder
+- Ctrl + F to find ip_address and then copy number into the IP Address constant
