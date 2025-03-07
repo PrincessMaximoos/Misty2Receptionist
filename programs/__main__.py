@@ -3,23 +3,23 @@ Misty as a GPT enabled smart receptionist
 
 REQUIRES INTERNET CONNECTION
 ----------------------------
-
-
 #----Install----#
-pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3
-
-# # https://github.com/nomic-ai/gpt4all?tab=readme-ov-file
-# # # pick correct installer for your os
+Windows:
+cd C:\Users\m016770n\AppData\Local\Programs\Python\Python313\Scripts
+pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3 pyaudio
 
 Ubuntu:
+pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3
 sudo apt install nvidia-cuda-toolkit
 sudo apt install espeak
 sudo apt install python3-pyaudio
 
-Windows:
-https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_local
+# # https://github.com/nomic-ai/gpt4all?tab=readme-ov-file
+# # # pick correct installer for your os
 
-pip install pyaudio
+# # Windows: 
+# # https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_local
+
 '''
 
 #----import mistyPy----#
