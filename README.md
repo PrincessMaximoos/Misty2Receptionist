@@ -4,7 +4,7 @@ REQUIRES INTERNET CONNECTION
 
 ----------------------------
 
-#----Install----#
+## Install
 
 Windows:
 
@@ -29,7 +29,7 @@ sudo apt install python3-pyaudio
 
 -------------------------------------------------------------------------------------------------------------------
 
-#----Setup----#
+## Setup
 Power Misty on
 Plug an empty usb thumbdrive into PC and create a folder called 'misty'
 When her eyes open fully, take her back cover off and insert a usb thumbdrive
