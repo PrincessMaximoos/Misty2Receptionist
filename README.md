@@ -22,10 +22,14 @@ pip install gpt4all typer misty-sdk websocket-client opencv-python-headless imag
 
 Ubuntu:
 
-In a terminal run the following commands
+In a terminal run the following commands:
+
 pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3
+
 sudo apt install nvidia-cuda-toolkit
+
 sudo apt install espeak
+
 sudo apt install python3-pyaudio
 
 -------------------------------------------------------------------------------------------------------------------
