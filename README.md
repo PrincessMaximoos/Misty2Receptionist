@@ -8,26 +8,22 @@ REQUIRES INTERNET CONNECTION
 
 Windows:
 
-Install python3 from the link below:
-https://www.python.org/downloads/
-Move it to Documents and run the exe
+- Install python3 from the link below:
+  https://www.python.org/downloads/
+- Move it to Documents and run the exe
 
-Note: this is for Python 3.13 if you are using a different version change the file path below to match (e.g Python 2.7 -> \Python27\)
-Open Windows Powershell and copy the two commands below:
-
-cd C:\Users\<YOUR_USR>\AppData\Local\Programs\Python\Python313\Scripts
-
-pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3 pyaudio
+- Note: this is for Python 3.13 if you are using a different version change the file path below to match (e.g Python 2.7 -> \Python27\)
+- Open Windows Powershell and copy the two commands below:
+  - `cd C:\Users\<YOUR_USR>\AppData\Local\Programs\Python\Python313\Scripts`
+  - `pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3 pyaudio`
 
 -------------------------------------------------------------------------------------------------------------------
 
 Ubuntu:
 
-In a terminal run the following commands:
-
-pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3
-
-sudo apt install espeak python3-pyaudio
+- In a terminal run the following commands:
+- `pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3`
+- `sudo apt install espeak python3-pyaudio`
 
 -------------------------------------------------------------------------------------------------------------------
 
