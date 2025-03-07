@@ -16,6 +16,7 @@ Note: this is for Python 3.13 if you are using a different version change the fi
 Open Windows Powershell and copy the two commands below:
 
 cd C:\Users\<YOUR_USR>\AppData\Local\Programs\Python\Python313\Scripts
+
 pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3 pyaudio
 
 -------------------------------------------------------------------------------------------------------------------
