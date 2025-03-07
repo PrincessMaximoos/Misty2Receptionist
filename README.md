@@ -1,6 +1,7 @@
 # Misty as a GPT enabled smart receptionist
 
 REQUIRES INTERNET CONNECTION
+
 ----------------------------
 
 #----Install----#
@@ -14,6 +15,7 @@ Note: this is for Python 3.13 if you are using a different version change the fi
 Open Windows Powershell and copy the two commands below
 cd C:\Users\m016770n\AppData\Local\Programs\Python\Python313\Scripts
 pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3 pyaudio
+
 -------------------------------------------------------------------------------------------------------------------
 
 Ubuntu:
@@ -22,6 +24,7 @@ pip install gpt4all typer misty-sdk websocket-client opencv-python-headless imag
 sudo apt install nvidia-cuda-toolkit
 sudo apt install espeak
 sudo apt install python3-pyaudio
+
 -------------------------------------------------------------------------------------------------------------------
 
 #----Setup----#
