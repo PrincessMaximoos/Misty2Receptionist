@@ -1,3 +1,50 @@
+'''
+Misty as a GPT enabled smart receptionist
+
+REQUIRES INTERNET CONNECTION
+----------------------------
+
+#----Install----#
+Windows:
+
+Install python3 from the link below:
+https://www.python.org/downloads/
+Move it to Documents and run the exe
+
+Note: this is for Python 3.13 if you are using a different version change the file path below to match (e.g Python 2.7 -> \Python27\)
+Open Windows Powershell and copy the two commands below
+cd C:\Users\m016770n\AppData\Local\Programs\Python\Python313\Scripts
+pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3 pyaudio
+-------------------------------------------------------------------------------------------------------------------
+
+Ubuntu:
+In a terminal run the following commands
+pip install gpt4all typer misty-sdk websocket-client opencv-python-headless image speechrecognition pyttsx3
+sudo apt install nvidia-cuda-toolkit
+sudo apt install espeak
+sudo apt install python3-pyaudio
+-------------------------------------------------------------------------------------------------------------------
+
+#----Setup----#
+Power Misty on
+Plug an empty usb thumbdrive into PC and create a folder called 'misty'
+When her eyes open fully, take her back cover off and insert a usb thumbdrive
+Wait 1 minute and not a moment less
+Plug usb back into pc and open the new device_info.json file in the 'misty' folder
+Ctrl + F to find ip_address and then copy number into the IP Address constant
+
+
+
+# # https://github.com/nomic-ai/gpt4all?tab=readme-ov-file
+# # # pick correct installer for your os
+
+# # Windows: 
+# # https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_local
+
+'''
+
+IP_ADDRESS : str = "10.4.155.4"
+
 #----import mistyPy----#
 from mistyPy.Robot import Robot
 from mistyPy.GenerateRobot import RobotGenerator
@@ -307,10 +354,10 @@ def id_check(data : str) -> list[bool, dict]:
     for id in ids:
         if id["Name"] == details["Name"]:
             already_in_ids : bool = True
-            dev.dev("ID", "Already in IDs", f"{details["Name"]}, {details["Company"]}, {details['IDNum']}")
+            dev.dev("ID", "Already in IDs", f"{details['Name']}, {details['Company']}, {details['IDNum']}")
             id["Amount"] += 1
             details["Amount"] = id["Amount"]
-            dev.dev("ID", "Incrementing Amount", f"{details["Amount"] - 1} -> {details["Amount"]}")
+            dev.dev("ID", "Incrementing Amount", f"{details['Amount'] - 1} -> {details['Amount']}")
             id_rewrite()
 
     return already_in_ids, details
@@ -476,12 +523,11 @@ if __name__ == "__main__":
     model = GPT4All("Llama-3.2-1B-Instruct-Q4_0.gguf") # less resource intensive model
     # model = GPT4All("Meta-Llama-3-8B-Instruct.Q4_0.gguf") # stronger model
     
-    ip_address : str = "10.4.155.4"
     
     method = input("Do you wish to enter the text only interface?\n").strip().lower()
     if method == "no":
         try:
-            misty : Robot = Robot(ip_address)
+            misty : Robot = Robot(IP_ADDRESS)
             dev = dev_misty()
             dev.dev("Global", "Misty Connected")
         except:
